@@ -14,7 +14,11 @@ export default function Weather() {
           Vlada Honchar{" "}
         </a>
         and is{" "}
-        <a href="#" target="_blank" rel="noreferrer">
+        <a
+          href="https://github.com/VladaHV/my-weather-react-app.git"
+          target="_blank"
+          rel="noreferrer"
+        >
           open-sourced on GitHub
         </a>
       </footer>
