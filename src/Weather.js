@@ -1,9 +1,14 @@
 import React from "react";
+import "./Weather.css";
 
 export default function Weather() {
   return (
-    <div className="container">
-      <h1>Hello</h1>How are you?
+    <div className="Weather">
+      <h1>Kryvyi Rih</h1>
+      <ul>
+        <li>Tuesday 13:00</li>
+        <li>Clear Sky</li>
+      </ul>
       <footer>
         This site coded by{" "}
         <a
