@@ -2,17 +2,23 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./Weather.css";
 
-export default function Weather() {
-  const [ready, setReady] = useState(false);
-  const [temp, setTemp] = useState(null);
+export default function Weather(props) {
+  const [weatherData, setWeatherData] = useState({ ready: false });
 
   function showResponse(response) {
     console.log(response.data);
-    setTemp(response.data.main.temp);
-    setReady(true);
+    setWeatherData({
+      ready: true,
+      temp: response.data.main.temp,
+      wind: response.data.wind.speed,
+      humidity: response.data.main.humidity,
+      presipitation: response.data.main.pressure,
+      description: response.data.weather[0].description,
+      iconUrl: `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
+    });
   }
 
-  if (ready) {
+  if (weatherData.ready) {
     return (
       <div className="Weather">
         <form>
@@ -34,26 +40,26 @@ export default function Weather() {
             </div>
           </div>
         </form>
-        <h1>Kryvyi Rih</h1>
+        <h1>{props.defaultCity}</h1>
         <ul>
           <li>Tuesday 13:00</li>
-          <li>Clear Sky</li>
+          <li className="text-capitalize">{weatherData.description}</li>
         </ul>
         <div className="row mt-3">
           <div className="col-6">
             <img
               className="float-start"
-              src="https://ssl.gstatic.com/onebox/weather/64/sunny.png"
-              alt="clear sky"
+              src={weatherData.iconUrl}
+              alt={weatherData.description}
             />
-            <span className="temp">{temp}</span>
+            <span className="temp">{Math.round(weatherData.temp)}</span>
             <span className="unit">ºC</span>
           </div>
           <div className="col-6">
             <ul>
-              <li>Presipitation: 15%</li>
-              <li>Humidity: 72%</li>
-              <li>Wind: 30 km/h</li>
+              <li>Presipitation: {weatherData.presipitation}%</li>
+              <li>Humidity: {weatherData.humidity}%</li>
+              <li>Wind: {weatherData.wind} km/h</li>
             </ul>
           </div>
         </div>
@@ -61,9 +67,8 @@ export default function Weather() {
     );
   } else {
     const key = "cc51a9af04c66250e3d2034bcced18b7";
-    let city = "Dnipro";
     const units = "metric";
-    let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=${units}&appid=${key}`;
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${props.defaultCity}&units=${units}&appid=${key}`;
 
     axios.get(url).then(showResponse);
     return "Loading...";
