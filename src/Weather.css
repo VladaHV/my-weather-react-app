@@ -15,7 +15,7 @@
   line-height: 29px;
 }
 
-.Weather img {
+.Weather .icon {
   height: 64px;
   margin-right: 10px;
 }

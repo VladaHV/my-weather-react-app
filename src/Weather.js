@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./Weather.css";
 import WeatherInfo from "./WeatherInfo";
+import WeatherForecast from "./WeatherForecast";
 
 export default function Weather() {
   const [weatherData, setWeatherData] = useState({ ready: false });
   const [city, setCity] = useState("Kryvyi Rih");
 
   function showResponse(response) {
+    // console.log(response);
     setWeatherData({
       ready: true,
       temp: response.data.main.temp,
@@ -17,7 +19,9 @@ export default function Weather() {
       description: response.data.weather[0].description,
       date: new Date(response.data.dt * 1000),
       iconUrl: `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
-	  city: response.data.name
+      city: response.data.name,
+      lat: response.data.coord.lat,
+      lon: response.data.coord.lon,
     });
   }
 
@@ -62,6 +66,7 @@ export default function Weather() {
           </div>
         </form>
         <WeatherInfo data={weatherData} />
+        <WeatherForecast data={weatherData} />
       </div>
     );
   } else {
