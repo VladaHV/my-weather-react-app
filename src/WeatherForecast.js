@@ -25,7 +25,7 @@ export default function WeatherForecast(props) {
                   <WeatherForecastDay data={dailyForecast} />
                 </div>
               );
-            }
+            } else return null;
           })}
         </div>
         <div className="row mt-5">
@@ -36,7 +36,7 @@ export default function WeatherForecast(props) {
                   <WeatherForecastDay data={dailyForecast} />
                 </div>
               );
-            }
+            } else return null;
           })}
         </div>
       </div>
