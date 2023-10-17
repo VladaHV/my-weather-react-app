@@ -32,7 +32,7 @@ export default function WeatherForecastDay(props) {
   function fullData() {
     let date = new Date(props.data.dt * 1000);
     let data = date.getDate();
-    let month = date.getMonth();
+    let month = date.getMonth() + 1;
     let year = date.getFullYear();
 
     if (data < 10) {
