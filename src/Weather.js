@@ -15,7 +15,7 @@ export default function Weather() {
       temp: response.data.main.temp,
       wind: response.data.wind.speed,
       humidity: response.data.main.humidity,
-      presipitation: response.data.main.pressure,
+      pressure: response.data.main.pressure,
       description: response.data.weather[0].description,
       date: new Date(response.data.dt * 1000),
       iconUrl: `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
@@ -30,7 +30,12 @@ export default function Weather() {
     const units = "metric";
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=${units}&appid=${key}`;
 
-    axios.get(url).then(showResponse);
+    axios
+      .get(url)
+      .then(showResponse)
+      .catch((error) => {
+        return error;
+      });
   }
 
   function handleSubmit(event) {

@@ -12,32 +12,32 @@ export default function WeatherForecast(props) {
   }, [props.data]);
 
   function handleResponse(response) {
-    console.log(response.data);
+    // console.log(response.data);
     setForecast(response.data.daily);
     setReady(true);
   }
 
   if (ready) {
-    console.log(forecast);
+    // console.log(forecast);
     return (
       <div className="WeatherForecast">
-        <div className="row mt-5">
+        <div className="row mt-3">
           {forecast.map(function (dailyForecast, index) {
             if (index < 4) {
               return (
                 <div className="col" key={index}>
-                  <WeatherForecastDay data={dailyForecast} />
+                  <WeatherForecastDay data={dailyForecast} index={index} />
                 </div>
               );
             } else return null;
           })}
         </div>
-        <div className="row mt-5">
+        <div className="row mt-3">
           {forecast.map(function (dailyForecast, index) {
             if (index >= 4) {
               return (
                 <div className="col" key={index}>
-                  <WeatherForecastDay data={dailyForecast} />
+                  <WeatherForecastDay data={dailyForecast} index={index} />
                 </div>
               );
             } else return null;
@@ -53,7 +53,12 @@ export default function WeatherForecast(props) {
     let lon = props.data.lon;
     let apiUrl = `${url}lat=${lat}&lon=${lon}&appid=${apiKey}&units=${units}`;
 
-    axios.get(apiUrl).then(handleResponse);
+    axios
+      .get(apiUrl)
+      .then(handleResponse)
+      .catch((error) => {
+        return error;
+      });
     return null;
   }
 }
